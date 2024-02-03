@@ -1,0 +1,36 @@
+plugins {
+  id 'java-library'
+}
+
+group = 'io.github.takeyoda'
+version = '0.0.1'
+
+repositories {
+  mavenCentral()
+}
+
+compileJava {
+  options.encoding = 'UTF-8'
+  options.compilerArgs << '-parameters'
+  options.compilerArgs << '-Xlint:deprecation'
+  options.compilerArgs << '-Xlint:unchecked'
+  options.compilerArgs << '-Xdiags:verbose'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(17)
+    vendor = JvmVendorSpec.AMAZON
+    implementation = JvmImplementation.VENDOR_SPECIFIC
+  }
+}
+
+tasks.named('jar') {
+  manifest {
+    attributes('Implementation-Title': project.name, 'Implementation-Version': project.version)
+  }
+}
+
+dependencies {
+  implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
+}

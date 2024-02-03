@@ -1,0 +1,35 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+
+env:
+  JAVA_VERSION: 17
+
+jobs:
+  build:
+    name: 'build'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    timeout-minutes: 2
+    steps:
+      - name: Checkout HEAD
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          java-version: ${{env.JAVA_VERSION}}
+          server-id: github
+          cache: gradle
+      - name: Build
+        run: ./gradlew build
+      - name: Publish
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

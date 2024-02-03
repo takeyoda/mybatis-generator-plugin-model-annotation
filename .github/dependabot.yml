@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
+      time: '09:00'
+      timezone: 'Asia/Tokyo'
+    open-pull-requests-limit: 5
+    assignees:
+      - takeyoda
+    reviewers:
+      - takeyoda
+    commit-message:
+      prefix: '[gradle]'
+      include: scope
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
+      time: '09:00'
+      timezone: 'Asia/Tokyo'
+    open-pull-requests-limit: 5
+    assignees:
+      - takeyoda
+    reviewers:
+      - takeyoda
+    commit-message:
+      prefix: '[gha]'
+      include: scope

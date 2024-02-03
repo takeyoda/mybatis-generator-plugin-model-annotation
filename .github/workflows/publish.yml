@@ -1,15 +1,15 @@
 name: build
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 env:
   JAVA_VERSION: 17
 
 jobs:
-  build:
-    name: 'build'
+  publish:
+    name: Publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,7 +29,13 @@ jobs:
           cache: gradle
       - name: Build
         run: ./gradlew build
+      - name: Get version
+        id: get-version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "publishing version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Publish
-        run: ./gradlew publish
+        run: ./gradlew publish -Pversion=${{ steps.get-version.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ github.token }}

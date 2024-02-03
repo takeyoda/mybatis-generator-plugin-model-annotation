@@ -1,0 +1,28 @@
+name: build
+on:
+  push:
+    branches:
+      - '*'
+
+env:
+  JAVA_VERSION: 17
+
+jobs:
+  test:
+    name: 'Unit Test'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout HEAD
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          java-version: ${{env.JAVA_VERSION}}
+          server-id: github
+          cache: gradle
+      - name: Run test
+        run: ./gradlew test

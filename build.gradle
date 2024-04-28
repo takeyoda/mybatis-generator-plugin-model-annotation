@@ -54,7 +54,7 @@ dependencies {
   testImplementation 'org.mockito:mockito-core:5.11.0'
   testImplementation 'org.mockito:mockito-junit-jupiter:5.11.0'
 
-  errorprone 'com.google.errorprone:error_prone_core:2.26.1'
+  errorprone 'com.google.errorprone:error_prone_core:2.27.0'
 }
 
 publishing {
